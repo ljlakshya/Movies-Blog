@@ -1,0 +1,58 @@
+<html>
+<head>
+  <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <script src="https://code.jquery.com/jquery-3.5.0.js"  integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="  crossorigin="anonymous"></script>
+
+<title>
+Blogs
+</title>
+
+</head>
+<body class="container">
+
+<p>You are inside blogs</p>
+
+<form name='form1' action='/blogs' method='post'>
+<p>Type Movie Name:</p>
+ <input type='text' name='mov' >
+ <p>Type Movie Details:</p>
+ <input type='text' name='details' >
+ <p>Click to submit details</p>
+ <button type='submit'>submit </button>
+
+      </form>
+
+  <ul>
+  <% for(var i=0;i<movie.length ;i++){ %>
+    <li><%= movie[i].mov %></li> <p>-<%= movie[i].details %></p>
+      <% } %>
+  </ul>
+<p id="testt">Click the movie names and then refresh to delete them...</p>
+<script>
+$(document).ready(function(){
+
+  $('li').on('click', function(){
+
+      var movv = $(this).text().replace(/ /g, "-");
+      $.ajax({
+
+        type: 'DELETE',
+        url: '/blogs/' + movv,
+        success:function(data,status,xhr){
+         console.log("doing");
+          location.reload();
+       },
+       error:function(xhr,status,error){
+         console.log("fail");
+       }
+      });
+  });
+
+
+});
+
+</script>
+
+</body>
+</html>
